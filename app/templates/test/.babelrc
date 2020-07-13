@@ -1,0 +1,6 @@
+{
+  "presets": ["airbnb"],
+  "ignore": ["node_modules"],
+  "sourceMaps": "inline",
+  "retainLines": true
+}

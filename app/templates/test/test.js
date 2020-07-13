@@ -1,18 +1,25 @@
-import <%= lib_module %> from '../../src/<%= repo %>';
+import sinon from 'sinon';
+import { assert } from 'chai';
+import searchquire from 'searchquire';
 
-describe('<%= lib_module %>', () => {
-  describe('Greet function', () => {
+describe('<%= module_name %> library', () => {
+    let <%= module_name %>;
+
+    before(() => {
+      // initialize test config and spies
+      <%= module_name %> = searchquire('*/cartridge/scripts/lib/<%= module_name %>', {
+        basePath: '../cartridges/lib_<%= module_name %>/cartridge',
+        pattern: '*/cartridge/(.*)'},{}
+      );
+    });
+
     beforeEach(() => {
-      spy(<%= lib_module %>, 'greet');
-      <%= lib_module %>.greet();
+      // reset spies
     });
 
-    it('should have been run once', () => {
-      expect(<%= lib_module %>.greet).to.have.been.calledOnce;
+    describe('<%= module_name %> initialization', () => {
+      it('<%= module_name %> defined', () => {
+        assert.isDefined(<%= module_name %>)
+      });
     });
-
-    it('should have always returned hello', () => {
-      expect(<%= lib_module %>.greet).to.have.always.returned('hello');
-    });
-  });
 });

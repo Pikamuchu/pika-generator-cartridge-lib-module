@@ -1,6 +1,6 @@
 {
   "name": "generator-cartridge-lib-module",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "A Yeoman generator to create a SFRA cartridge lib from a Node module",
   "main": "app/index.js",
   "engines": {

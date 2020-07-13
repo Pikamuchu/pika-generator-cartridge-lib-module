@@ -15,15 +15,17 @@ module.exports = generators.Base.extend({
     this.pkg = require('../package.json');
     this.username = 'anonymous';
     this.dirname = path.basename(this.destinationRoot());
-    this.cartridge_name = this.dirname.replace('cartridge_', '');
     this.dirnameNoJs = path.basename(this.dirname, '.js');
     this.dirnameWithJs = this.dirnameNoJs + '.js';
+    this.defaultModuleName = this.dirname.replace(/cartridge[_-]?/, '').replace(/(library|lib)[_-]?/, '');
+    this.defaultModuleVersion = '^1.0.0';
+    this.defaultModuleType = 'lib';
   },
 
   prompting: function() {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ' + chalk.red('Babel Library Boilerplate') + ' generator!'
+      'Welcome to the ' + chalk.red('Cartridge Lib Module') + ' generator!'
     ));
 
     var gitName = this.user.git.name();
@@ -35,9 +37,19 @@ module.exports = generators.Base.extend({
 
     var prompts = [{
       type: 'input',
-      name: 'lib_module',
-      message: 'What is the name of this project\'s node module?',
-      default: this.cartridge_name
+      name: 'module_name',
+      message: 'What is the name of this library module?',
+      default: this.defaultModuleName
+    }, {
+      type: 'input',
+      name: 'module_version',
+      message: 'What is the version of the node module dependency?',
+      default: this.defaultModuleVersion
+    },{
+      type: 'input',
+      name: 'module_type',
+      message: 'What is the main folder of the node module dependency on package.json (lib, dist, ...)?',
+      default: this.defaultModuleType
     }, {
       type: 'input',
       name: 'user',
@@ -69,20 +81,11 @@ module.exports = generators.Base.extend({
       .then(function(props) {
         self.user = jsonEscape(props.user);
         self.repo = jsonEscape(props.repo);
-
-        // A good candidate for the module name is the directory, which we assume
-        // to be derived from the repository name, stripped of any `.js` extension.
-        // The extension is stripped per the "tips" section of the npm docs:
-        // https://docs.npmjs.com/files/package.json#name
-        self.moduleName = jsonEscape(self.dirnameNoJs.toLowerCase());
-
-        // The mainFile, on the other hand, must always have an extension. Once
-        // again we derive this from the name of the directory.
-        self.fileName = jsonEscape(self.dirnameWithJs.toLowerCase());
-
         self.description = jsonEscape(props.description);
         self.author = jsonEscape(props.author);
-        self.lib_module = props.lib_module;
+        self.module_name = props.module_name;
+        self.module_version = props.module_version;
+        self.module_type = props.module_type;
       });
   },
 
@@ -104,20 +107,26 @@ module.exports = generators.Base.extend({
           }
         });
       });
-      console.log('lib:' + self.lib_module);
+      console.log('lib:' + self.module_name);
       this.template('gitignore', '.gitignore');
-      this.template('cartridges/lib_module', 'cartridges/lib_' + self.lib_module);
-      this.template('cartridges/lib_module/.project', 'cartridges/lib_' + self.lib_module + '/.project');
-      this.template('cartridges/module', 'cartridges/lib_' + self.lib_module + '/cartridge/scripts/lib/' + self.lib_module);
-      this.template('cartridges/lib_module.properties', 'cartridges/lib_' + self.lib_module + '/cartridge/lib_' + self.lib_module + '.properties');
+      this.template('cartridges/lib_module', 'cartridges/lib_' + self.module_name);
+      this.template('cartridges/lib_module/.project', 'cartridges/lib_' + self.module_name + '/.project');
+      this.template('cartridges/module', 'cartridges/lib_' + self.module_name + '/cartridge/scripts/lib/' + self.module_name);
+      this.template('cartridges/lib_module.properties', 'cartridges/lib_' + self.module_name + '/cartridge/lib_' + self.module_name + '.properties');
     }
   },
 
   install: function() {
-    this.installDependencies({
+    var installConfig = {
       bower: false,
       npm: true,
       skipInstall: this.options['skip-install']
-    });
+    }
+    if (!installConfig.skipInstall) {
+      installConfig.callback = function () {
+        this.spawnCommand('npm', ['run', 'build']);
+      }.bind(this) // bind the callback to the parent scope
+    }
+    this.installDependencies(installConfig);
   }
 });

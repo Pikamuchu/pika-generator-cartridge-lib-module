@@ -1,7 +1,1 @@
-const <%= lib_module %> = {
-  greet() {
-    return 'hello';
-  }
-};
-
-export default <%= lib_module %>;
+module.exports = require('./<%= module_type %>/<%= module_name %>');
