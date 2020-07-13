@@ -7,7 +7,9 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "nyc mocha --timeout 20000",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "prettier": "prettier --write \"./lib/*.js\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "sfra",
     "sfcc",
     "node",
+    "library",
     "transpile",
     "babel"
   ],
@@ -36,7 +39,15 @@
     "yosay": "1.2.1"
   },
   "devDependencies": {
-    "mocha": "3.1.0",
+    "codecov": "^3.6.5",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1",
+    "prettier": "^1.19.1",
+    "sinon": "^7.5.0",
     "yeoman-assert": "2.2.1",
     "yeoman-test": "1.5.1"
   }
