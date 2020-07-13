@@ -4,10 +4,7 @@ var path = require('path');
 var generators = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
-var mkdirp = require('mkdirp');
-var _ = require('lodash');
 var jsesc = require('jsesc');
-var npmWhoami = require('npm-whoami');
 
 function jsonEscape(str) {
   return jsesc(str, {quotes: 'double'});
@@ -16,7 +13,7 @@ function jsonEscape(str) {
 module.exports = generators.Base.extend({
   initializing: function() {
     this.pkg = require('../package.json');
-
+    this.username = 'anonymous';
     this.dirname = path.basename(this.destinationRoot());
     this.cartridge_name = this.dirname.replace('cartridge_', '');
     this.dirnameNoJs = path.basename(this.dirname, '.js');
@@ -29,21 +26,14 @@ module.exports = generators.Base.extend({
       'Welcome to the ' + chalk.red('Babel Library Boilerplate') + ' generator!'
     ));
 
-    this.username = '';
-    try {
-      this.username = npmWhoami.sync();
-    } catch(e) {
-      console.warn('Error getting npm user name: run `npm login`');
-    }
-
-    const gitName = this.user.git.name();
-    const gitEmail = this.user.git.email();
+    var gitName = this.user.git.name();
+    var gitEmail = this.user.git.email();
     let defaultAuthor = gitName ? gitName : '';
     if (gitEmail) {
       defaultAuthor += ` <${gitEmail}>`;
     }
 
-    var prompts = [, {
+    var prompts = [{
       type: 'input',
       name: 'lib_module',
       message: 'What is the name of this project\'s node module?',
@@ -105,12 +95,8 @@ module.exports = generators.Base.extend({
         files.forEach(function(filename) {
           var target;
           // Only copy the files that we don't want to rename. We do that after this loop.
-          // The files we don't want to rename are both "index.js", and one of them is in
-          // "test/unit," and the other is in "src"
-          var ignoreDir = relativeDir === 'test/unit' || relativeDir === 'src';
-          // Ignore the source file, which is dynamically generated, and the gitignore,
-          // which we need to rename (https://github.com/babel/generator-babel-boilerplate/issues/320)
-          const ignoreFile = /index.js$/.test(filename) || /gitignore$/.test(filename);
+          var ignoreDir = relativeDir.match('cartridges');
+          var ignoreFile = /gitignore$/.test(filename);
           var shouldCopy = !ignoreDir && !ignoreFile;
           if (shouldCopy) {
             target = path.join(relativeDir, filename);
@@ -118,9 +104,12 @@ module.exports = generators.Base.extend({
           }
         });
       });
+      console.log('lib:' + self.lib_module);
       this.template('gitignore', '.gitignore');
-      this.template('src/index.js', 'src/' + this.fileName);
-      this.template('test/unit/index.js', 'test/unit/' + this.fileName);
+      this.template('cartridges/lib_module', 'cartridges/lib_' + self.lib_module);
+      this.template('cartridges/lib_module/.project', 'cartridges/lib_' + self.lib_module + '/.project');
+      this.template('cartridges/module', 'cartridges/lib_' + self.lib_module + '/cartridge/scripts/lib/' + self.lib_module);
+      this.template('cartridges/lib_module.properties', 'cartridges/lib_' + self.lib_module + '/lib_' + self.lib_module + '.properties');
     }
   },
 

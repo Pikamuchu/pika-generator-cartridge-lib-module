@@ -5,7 +5,7 @@ var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 var os = require('os');
 
-describe('cartridge-library-boilerplate:app', function () {
+describe('cartridge-lib-module:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
       .inDir(path.join(os.tmpdir(), './temp-test'))
