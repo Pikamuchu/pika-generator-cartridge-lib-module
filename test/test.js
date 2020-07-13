@@ -7,6 +7,7 @@ var os = require('os');
 
 describe('cartridge-lib-module:app', function () {
   before(function (done) {
+    console.log('Generating test template on ' + os.tmpdir() + '/temp-test');
     helpers.run(path.join(__dirname, '../app'))
       .inDir(path.join(os.tmpdir(), './temp-test'))
       .withOptions({ 'skip-install': true })

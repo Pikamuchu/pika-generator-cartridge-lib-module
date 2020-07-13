@@ -109,7 +109,7 @@ module.exports = generators.Base.extend({
       this.template('cartridges/lib_module', 'cartridges/lib_' + self.lib_module);
       this.template('cartridges/lib_module/.project', 'cartridges/lib_' + self.lib_module + '/.project');
       this.template('cartridges/module', 'cartridges/lib_' + self.lib_module + '/cartridge/scripts/lib/' + self.lib_module);
-      this.template('cartridges/lib_module.properties', 'cartridges/lib_' + self.lib_module + '/lib_' + self.lib_module + '.properties');
+      this.template('cartridges/lib_module.properties', 'cartridges/lib_' + self.lib_module + '/cartridge/lib_' + self.lib_module + '.properties');
     }
   },
 
