@@ -60,3 +60,6 @@ snapshots/**/*.png
 # Coverage report
 coverage.lcov
 do
+
+# Dependencies builders
+Gruntfile.js

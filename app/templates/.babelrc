@@ -1,4 +1,4 @@
 {
-  "presets": ["airbnb"],
-  "ignore": ["node_modules"]
+    "presets": ["airbnb"],
+    "ignore": ["node_modules"]
 }

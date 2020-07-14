@@ -28,7 +28,7 @@ $ npm install -g yo generator-cartridge-lib-module
 Navigate to the directory you'd like to use for your project, then run `yo cartridge-lib-module`.
 ```
 $ mkdir lib-foo
-$ cd lib_foo
+$ cd lib-foo
 $ yo cartridge-lib-module
 ```
 

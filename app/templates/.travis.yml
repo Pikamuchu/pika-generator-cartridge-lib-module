@@ -1,14 +1,14 @@
 language: node_js
 matrix:
-  include:
-    - node_js: "8"
+    include:
+        - node_js: '8'
 dist: trusty
 cache:
-  directories:
-    - node_modules
+    directories:
+        - node_modules
 install:
-  - npm install
+    - npm install
 script:
-  - npm test
+    - npm test
 after_success:
-  - npm run coverage
+    - npm run coverage
