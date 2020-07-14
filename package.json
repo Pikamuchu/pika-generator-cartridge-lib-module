@@ -9,7 +9,7 @@
   "scripts": {
     "test": "nyc mocha --timeout 20000",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "prettier": "prettier --write \"./lib/*.js\""
+    "prettier": "prettier --write ./app/*.js"
   },
   "repository": {
     "type": "git",

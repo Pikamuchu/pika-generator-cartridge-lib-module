@@ -10,7 +10,7 @@
         "build": "babel node_modules/<%= module_name %> -d cartridges/lib_<%= module_name %>/cartridge/scripts/lib/<%= module_name %> --only node_modules/<%= module_name %>/*.js,node_modules/<%= module_name %>/<%= module_type %>",
         "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
         "lint": "sgmf-scripts --lint js",
-        "prettier": "prettier --write ./cartridges/*.js",
+        "prettier": "prettier --write ./cartridges/**/*.js",
         "test": "nyc mocha --require @babel/register --timeout 20000",
         "upload": "sgmf-scripts --upload -- ",
         "uploadCartridge": "sgmf-scripts --uploadCartridge lib_<%= module_name %>"
