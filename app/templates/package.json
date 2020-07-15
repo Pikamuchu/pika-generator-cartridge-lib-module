@@ -7,7 +7,7 @@
         "node": ">=6.0"
     },
     "scripts": {
-        "build": "babel node_modules/<%= module_name %> -d cartridges/lib_<%= module_name %>/cartridge/scripts/lib/<%= module_name %> --only node_modules/<%= module_name %>/*.js,node_modules/<%= module_name %>/<%= module_type %>",
+        "build": "babel-node utils/build.js <%= module_name %>",
         "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
         "lint": "sgmf-scripts --lint js",
         "prettier": "prettier --write ./cartridges/**/*.js",
@@ -48,6 +48,7 @@
         "mocha": "^5.2.0",
         "nyc": "^14.1.1",
         "prettier": "^1.13.0",
+        "replace": "^1.2.0",
         "searchquire": "^1.4.0",
         "sgmf-scripts": "^2.1.1",
         "simple4x": "^1.2.1",
