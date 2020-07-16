@@ -17,9 +17,7 @@ const main = () => {
         return;
     }
 
-    console.log(process.cwd());
-
-    console.log(`Building node module "${moduleName}" code as sfra cartridge lib.\n`);
+    console.log(`** Building node module "${moduleName}" code as sfra cartridge lib.\n`);
 
     let source = `node_modules/${moduleName}`;
     let cartridgePath = `cartridges/lib_${moduleName}/cartridge/scripts/lib`;
@@ -35,7 +33,7 @@ const main = () => {
             try {
                 const dependencyName = directory && /([^\\/]+$)/.exec(directory)[1];
                 if (dependencyName && !IGNORE_MODULE_DEPENDENCIES.includes(dependencyName)) {
-                    console.log(`Processing dependency module "${dependencyName}"...`);
+                    console.log(`\n* Processing dependency module "${dependencyName}"...`);
                     source = `${directory}`;
                     destination = `${cartridgePath}/${dependencyName}`;
                     babelTransform(source, destination);
@@ -54,6 +52,8 @@ const main = () => {
     requireReplace(cartridgePath);
 
     prettier();
+
+    console.log('\n** Done!!\n');
 };
 
 const babelTransform = (source, destination) => {
@@ -64,12 +64,15 @@ const babelTransform = (source, destination) => {
     if (result.error && result.error.errno) {
         console.error(result.error);
     }
+    console.log(String(result.stderr));
     console.log(String(result.stdout));
 };
 
 const createModuleIndex = (source, destination) => {
+    const sourceIndexFile = `${source}/index.js`;
     const indexFile = `${destination}/index.js`;
-    if (!existsSync(indexFile)) {
+    if (!existsSync(sourceIndexFile)) {
+        console.log(`Creating index file for module "${destination}"...`);
         const modulePackage = readFileSync(`${source}/package.json`);
         let moduleMainFile = modulePackage && JSON.parse(modulePackage).main;
         if (moduleMainFile && !moduleMainFile.startsWith('./')) {
@@ -79,8 +82,8 @@ const createModuleIndex = (source, destination) => {
     }
 };
 
-const requireReplace = path => {
-    console.log(`Transforming require cartridge on "${path}"...`);
+const requireReplace = cartridgePath => {
+    console.log(`Transforming require cartridge on "${cartridgePath}"...`);
     replace({
         regex: FIND_REPLACE_REQUIRE_REGEX,
         replacement: (str, p1) => {
@@ -88,7 +91,7 @@ const requireReplace = path => {
                 ? str
                 : str.replace(REPLACE_REQUIRE_REGEX, `require('*/cartridge/scripts/lib/${p1}/index')`);
         },
-        paths: [path],
+        paths: [cartridgePath],
         recursive: true,
         silent: true
     });

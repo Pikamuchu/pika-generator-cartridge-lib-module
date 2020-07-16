@@ -24,7 +24,7 @@ describe('<%= module_name %> library', () => {
 
     describe('<%= module_name %> initialization', () => {
         it('<%= module_name %> defined', () => {
-            assert.isDefined(<%= module_name %>)
+            assert.isDefined(<%= module_name %>);
         });
     });
 });
