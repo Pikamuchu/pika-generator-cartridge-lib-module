@@ -18,7 +18,7 @@ module.exports = generators.Base.extend({
     this.dirnameNoJs = path.basename(this.dirname, '.js');
     this.dirnameWithJs = this.dirnameNoJs + '.js';
     this.defaultModuleName = this.dirname.replace(/cartridge[_-]?/, '').replace(/(library|lib)[_-]?/, '');
-    this.defaultModuleVersion = '^1.0.0';
+    this.defaultModuleVersion = '1.0.0';
     this.defaultModuleType = 'lib';
   },
 
@@ -37,20 +37,14 @@ module.exports = generators.Base.extend({
       {
         type: 'input',
         name: 'module_name',
-        message: 'What is the name of this library module?',
+        message: 'What is the name of the node module library?',
         default: this.defaultModuleName
       },
       {
         type: 'input',
         name: 'module_version',
-        message: 'What is the version of the node module dependency?',
+        message: 'What is the version of the node module library?',
         default: this.defaultModuleVersion
-      },
-      {
-        type: 'input',
-        name: 'module_type',
-        message: 'What is the main folder of the node module dependency on package.json (lib, dist, ...)?',
-        default: this.defaultModuleType
       },
       {
         type: 'input',
@@ -70,11 +64,6 @@ module.exports = generators.Base.extend({
       },
       {
         type: 'input',
-        name: 'description',
-        message: 'What is a short description for this project?'
-      },
-      {
-        type: 'input',
         name: 'author',
         message: 'Who is the author of this project?',
         default: defaultAuthor,
@@ -86,11 +75,9 @@ module.exports = generators.Base.extend({
     return self.prompt(prompts).then(function(props) {
       self.user = jsonEscape(props.user);
       self.repo = jsonEscape(props.repo);
-      self.description = jsonEscape(props.description);
       self.author = jsonEscape(props.author);
       self.module_name = props.module_name;
       self.module_version = props.module_version;
-      self.module_type = props.module_type;
     });
   },
 
@@ -116,10 +103,6 @@ module.exports = generators.Base.extend({
       this.template('gitignore', '.gitignore');
       this.template('cartridges/lib_module', 'cartridges/lib_' + self.module_name);
       this.template('cartridges/lib_module/.project', 'cartridges/lib_' + self.module_name + '/.project');
-      this.template(
-        'cartridges/module',
-        'cartridges/lib_' + self.module_name + '/cartridge/scripts/lib/' + self.module_name
-      );
       this.template(
         'cartridges/lib_module.properties',
         'cartridges/lib_' + self.module_name + '/cartridge/lib_' + self.module_name + '.properties'

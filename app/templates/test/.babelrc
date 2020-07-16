@@ -1,6 +1,6 @@
 {
-    "presets": ["airbnb"],
-    "ignore": ["node_modules"],
-    "sourceMaps": "inline",
-    "retainLines": true
+  "presets": ["@babel/preset-env"],
+  "ignore": ["node_modules"],
+  "sourceMaps": "inline",
+  "retainLines": true
 }

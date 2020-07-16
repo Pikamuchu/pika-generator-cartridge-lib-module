@@ -1,7 +1,7 @@
 {
     "name": "cartridge_lib_<%= module_name %>",
     "version": "0.0.1",
-    "description": "<%- description %>",
+    "description": "Cartridge library from <%= module_name %> node module",
     "main": "cartridges/lib_<%= module_name %>/cartridge/scripts/lib/<%= module_name %>/index.js",
     "engines": {
         "node": ">=6.0"
@@ -34,11 +34,11 @@
         "@babel/core": "^7.9.0",
         "@babel/node": "^7.8.7",
         "@babel/plugin-transform-runtime": "^7.9.0",
+        "@babel/preset-env": "^7.9.0",
         "@babel/runtime": "^7.9.2",
         "autoprefixer": "^9.6.0",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",
-        "babel-preset-airbnb": "^5.0.0",
         "chai": "^4.2.0",
         "chai-subset": "^1.5.0",
         "eslint": "^5.9.0",

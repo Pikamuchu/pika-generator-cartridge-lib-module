@@ -7,9 +7,14 @@ describe('<%= module_name %> library', () => {
 
     before(() => {
         // initialize test config and spies
-        <%= module_name %> = searchquire('*/cartridge/scripts/lib/<%= module_name %>', {
-            basePath: '../cartridges/lib_<%= module_name %>/cartridge',
-            pattern: '*/cartridge/(.*)'},{}
+        <%= module_name %> = searchquire(
+            '*/cartridge/scripts/lib/<%= module_name %>/index',
+            {
+                basePath: '../cartridges/lib_<%= module_name %>/cartridge',
+                pattern: '*/cartridge/(.*)',
+                maxSearchModuleIterations: 20
+            },
+            {}
         );
     });
 

@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
 const path = require('path');
-const { existsSync, lstatSync, readdirSync } = require('fs');
+const { existsSync, lstatSync, readdirSync, readFileSync, writeFileSync } = require('fs');
 const { spawnSync } = require('child_process');
 const replace = require('replace');
 
 const REPLACE_REQUIRE_REGEX = /require\s*\(['"`]([^`"'.\\/]+)[`'"]\)/;
 const FIND_REPLACE_REQUIRE_REGEX = /.*require\s*\(['"`]([^`"'.\\/]+)[`'"]\)/g;
 const IGNORE_MODULE_DEPENDENCIES = ['.bin'];
+const BABEL_IGNORE_FILES = ['**/test.js', '**/*.test.js', '**/*.min.js', '**/Gruntfile.js'];
 
 const main = () => {
     const args = process.argv.slice(2);
@@ -23,9 +24,9 @@ const main = () => {
     let source = `node_modules/${moduleName}`;
     let cartridgePath = `cartridges/lib_${moduleName}/cartridge/scripts/lib`;
     let destination = `${cartridgePath}/${moduleName}`;
-    let only = [`${source}/*.js`, `${source}/lib`, `${source}/dist`];
 
-    babelTransform(source, destination, only);
+    babelTransform(source, destination);
+    createModuleIndex(source, destination);
 
     while (isDirectory(`${source}/node_modules`)) {
         const currentDirectory = `${source}/node_modules`;
@@ -37,8 +38,8 @@ const main = () => {
                     console.log(`Processing dependency module "${dependencyName}"...`);
                     source = `${directory}`;
                     destination = `${cartridgePath}/${dependencyName}`;
-                    only = [`${source}/*.js`, `${source}/lib`, `${source}/dist`];
-                    babelTransform(source, destination, only);
+                    babelTransform(source, destination);
+                    createModuleIndex(source, destination);
                 }
             } catch (e) {
                 console.error(e);
@@ -55,14 +56,27 @@ const main = () => {
     prettier();
 };
 
-const babelTransform = (source, destination, only) => {
+const babelTransform = (source, destination) => {
     console.log(`Babel Transforming module "${source}" to "${destination}"...`);
     const babel = path.sep === '/' ? 'babel' : 'babel.cmd';
-    const result = spawnSync(babel, [source, '-d', destination, '--only', only]);
+    const only = [`${source}/*.js`, `${source}/lib`, `${source}/main`];
+    const result = spawnSync(babel, [source, '-d', destination, '--only', only, '--ignore', BABEL_IGNORE_FILES]);
     if (result.error && result.error.errno) {
         console.error(result.error);
     }
     console.log(String(result.stdout));
+};
+
+const createModuleIndex = (source, destination) => {
+    const indexFile = `${destination}/index.js`;
+    if (!existsSync(indexFile)) {
+        const modulePackage = readFileSync(`${source}/package.json`);
+        let moduleMainFile = modulePackage && JSON.parse(modulePackage).main;
+        if (moduleMainFile && !moduleMainFile.startsWith('./')) {
+            moduleMainFile = `./${moduleMainFile}`;
+        }
+        writeFileSync(indexFile, `module.exports = require('${moduleMainFile}');`);
+    }
 };
 
 const requireReplace = path => {
@@ -70,8 +84,9 @@ const requireReplace = path => {
     replace({
         regex: FIND_REPLACE_REQUIRE_REGEX,
         replacement: (str, p1) => {
-            console.log (str + ' ' + p1 + '  ' + str.match(/^\s*\*/))
-            return str.match(/^\s*\*/) ? str : str.replace(REPLACE_REQUIRE_REGEX, `require('*/cartridge/scripts/lib/${p1}')`)
+            return str.match(/^\s*\*/)
+                ? str
+                : str.replace(REPLACE_REQUIRE_REGEX, `require('*/cartridge/scripts/lib/${p1}/index')`);
         },
         paths: [path],
         recursive: true,
