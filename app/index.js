@@ -5,6 +5,7 @@ var generators = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var jsesc = require('jsesc');
+var latestVersion = require('latest-version');
 
 function jsonEscape(str) {
   return jsesc(str, { quotes: 'double' });
@@ -17,7 +18,7 @@ module.exports = generators.Base.extend({
     this.dirname = path.basename(this.destinationRoot());
     this.dirnameNoJs = path.basename(this.dirname, '.js');
     this.dirnameWithJs = this.dirnameNoJs + '.js';
-    this.defaultModuleName = this.dirname.replace(/cartridge[_-]?/, '').replace(/(library|lib)[_-]?/, '');
+    this.defaultModuleName = this.dirname.replace(/.*cartridge[_-]?/, '').replace(/.*(library|lib)[_-]?/, '');
     this.defaultModuleVersion = '1.0.0';
     this.defaultModuleType = 'lib';
   },
@@ -44,7 +45,15 @@ module.exports = generators.Base.extend({
         type: 'input',
         name: 'module_version',
         message: 'What is the version of the node module library?',
-        default: this.defaultModuleVersion
+        default: function (answers) {
+          return latestVersion(answers.module_name)
+            .then(function(version) {
+              return version || '1.0.0';
+            })
+            .catch(function() {
+              return '1.0.0';
+            });
+        }
       },
       {
         type: 'input',
