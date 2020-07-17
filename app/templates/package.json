@@ -27,9 +27,9 @@
     },
     "homepage": "https://github.com/<%= user %>/<%= repo %>",
     "dependencies": {
-        "<%= module_name %>": "<%= module_version %>"
     },
     "devDependencies": {
+        "<%= module_name %>": "<%= module_version %>",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.9.0",
         "@babel/node": "^7.8.7",
