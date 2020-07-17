@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-    <name><%= module_name %></name>
+    <name>lib_<%= module_name %></name>
     <comment></comment>
     <projects></projects>
     <buildSpec>

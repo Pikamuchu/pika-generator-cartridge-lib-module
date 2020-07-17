@@ -22,7 +22,6 @@ Install `yo` and this generator globally.
 $ npm install -g yo generator-cartridge-lib-module
 ```
 
-
 ## Usage
 
 Navigate to the directory you'd like to use for your project, then run `yo cartridge-lib-module`.
@@ -33,5 +32,3 @@ $ yo cartridge-lib-module
 ```
 
 Answer a few questions, and your project will be scaffolded.
-
-

@@ -19,7 +19,11 @@
         "type": "git",
         "url": "https://github.com/<%= user %>/<%= repo %>.git"
     },
-    "keywords": [],
+    "keywords": [
+        "cartridge",
+        "sfra",
+        "<%= module_name %>"
+    ],
     "author": "<%- author %>",
     "license": "MIT",
     "bugs": {
