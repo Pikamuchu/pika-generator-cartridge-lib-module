@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Cartridge library from [<%= module_name %>](https://www.npmjs.com/package/<%= module_name %>) npm  node module
+Cartridge library from [<%= module_name %>](https://www.npmjs.com/package/<%= module_name %>) npm  node module version <%= module_version %>
 
 ## Build with
 
@@ -30,10 +30,10 @@ npm i cartridge_lib_<%= module_name %>
 
 This cartridge library is a babel transpilation to ES5 with some minor changes in order to be usable as a standard SFRA cartridge.
 
-The main <%= module_name %> module can be loaded using as a standard SFRA script using
+The <%= module_name %> module can be loaded using require cartridge as a standard SFRA script.
 
 ````
 var <%= module_name %> = require('*/cartridge/scripts/lib/<%= module_name %>/index');
 ````
 
-See [lodash](https://www.npmjs.com/package/lodash) documentation for module usage.
+See [<%= module_name %>](https://www.npmjs.com/package/<%= module_name %>) documentation for module usage.
