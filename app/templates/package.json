@@ -54,7 +54,7 @@
         "nyc": "^14.1.1",
         "prettier": "^1.13.0",
         "replace": "^1.2.0",
-        "searchquire": "^1.4.0",
+        "searchquire": "^1.5.2",
         "sgmf-scripts": "^2.1.1",
         "simple4x": "^1.2.1",
         "sinon": "^7.1.1",
