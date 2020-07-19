@@ -1,7 +1,7 @@
 # Cartridge lib <%= module_name %>
 
 [![Version](https://img.shields.io/npm/v/cartridge_lib_<%= module_name %>.svg)](https://npmjs.org/package/cartridge_lib_<%= module_name %>)
-[![Build Status](https://img.shields.io/travis/<%= user %>/<%= repo %>/master.svg)](https://travis-ci.com/<%= user %>/<%= repo %>)
+[![Build Status](https://travis-ci.com/<%= user %>/<%= repo %>.svg?branch=master)](https://travis-ci.com/<%= user %>/<%= repo %>)
 [![codecov](https://codecov.io/gh/<%= user %>/<%= repo %>/branch/master/graph/badge.svg)](https://codecov.io/gh/<%= user %>/<%= repo %>)
 
 ## Introduction
