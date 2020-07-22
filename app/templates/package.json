@@ -13,7 +13,8 @@
         "prettier": "prettier --write ./cartridges/**/*.js",
         "test": "nyc mocha --require @babel/register --timeout 20000",
         "upload": "sgmf-scripts --upload -- ",
-        "uploadCartridge": "sgmf-scripts --uploadCartridge lib_<%= module_name %>"
+        "uploadCartridge": "sgmf-scripts --uploadCartridge lib_<%= module_name %>",
+        "babel": "babel cartridges -d cartridges"
     },
     "repository": {
         "type": "git",

@@ -49,6 +49,9 @@ const main = () => {
         }
     }
 
+    // workaround in case babel presets not correctly detected
+    npmBabel();
+
     requireReplace(cartridgePath);
 
     prettier();
@@ -61,6 +64,16 @@ const babelTransform = (source, destination) => {
     const babel = path.sep === '/' ? 'babel' : 'babel.cmd';
     const only = [`${source}/*.js`, `${source}/lib`, `${source}/main`];
     const result = spawnSync(babel, [source, '-d', destination, '--only', only, '--ignore', BABEL_IGNORE_FILES]);
+    if (result.error && result.error.errno) {
+        console.error(result.error);
+    }
+    console.log(String(result.stderr));
+    console.log(String(result.stdout));
+};
+
+const npmBabel = () => {
+    const npm = path.sep === '/' ? 'npm' : 'npm.cmd';
+    const result = spawnSync(npm, ['run', 'babel']);
     if (result.error && result.error.errno) {
         console.error(result.error);
     }
