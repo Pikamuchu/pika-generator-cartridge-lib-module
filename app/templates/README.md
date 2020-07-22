@@ -11,6 +11,7 @@ Cartridge library from [<%= module_name %>](https://www.npmjs.com/package/<%= mo
 ## Build with
 
 * [<%= module_name %>](https://www.npmjs.com/package/<%= module_name %>)
+* [Generator Cartridge Lib Module](https://www.npmjs.com/package/generator-cartridge-lib-module)
 
 ## Installation
 

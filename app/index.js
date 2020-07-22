@@ -100,7 +100,7 @@ module.exports = generators.Base.extend({
           var target;
           // Only copy the files that we don't want to rename. We do that after this loop.
           var ignoreDir = relativeDir.match('cartridges');
-          var ignoreFile = /gitignore$/.test(filename);
+          var ignoreFile = /(npmignore|gitignore)$/.test(filename);
           var shouldCopy = !ignoreDir && !ignoreFile;
           if (shouldCopy) {
             target = path.join(relativeDir, filename);
@@ -110,6 +110,7 @@ module.exports = generators.Base.extend({
       });
       console.log('lib:' + self.module_name);
       this.template('gitignore', '.gitignore');
+      this.template('npmignore', '.npmignore');
       this.template('cartridges/lib_module', 'cartridges/lib_' + self.module_name);
       this.template('cartridges/lib_module/.project', 'cartridges/lib_' + self.module_name + '/.project');
       this.template(
