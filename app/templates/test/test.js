@@ -1,6 +1,6 @@
-import sinon from 'sinon';
-import { assert } from 'chai';
-import searchquire from 'searchquire';
+const sinon = require('sinon');
+const { assert } = require('chai');
+const searchquire = require('searchquire');
 
 describe('<%= module_name %> library', () => {
     let <%= module_name %>;

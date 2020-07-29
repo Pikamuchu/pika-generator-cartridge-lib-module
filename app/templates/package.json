@@ -1,6 +1,6 @@
 {
     "name": "cartridge_lib_<%= module_name %>",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Cartridge library from <%= module_name %> node module",
     "main": "cartridges/lib_<%= module_name %>/cartridge/scripts/lib/<%= module_name %>/index.js",
     "engines": {
@@ -31,8 +31,6 @@
         "url": "https://github.com/<%= user %>/<%= repo %>/issues"
     },
     "homepage": "https://github.com/<%= user %>/<%= repo %>",
-    "dependencies": {
-    },
     "devDependencies": {
         "<%= module_name %>": "<%= module_version %>",
         "@babel/cli": "^7.8.4",

@@ -15,16 +15,30 @@ Cartridge library from [<%= module_name %>](https://www.npmjs.com/package/<%= mo
 
 ## Installation
 
-This library can be installed as a standard SFRA cartridge cloning the repository
+### As standard SFCC cartridge
+
+This library can be installed as a standard SFRA cartridge cloning the repository and running npm script uploadCartridge
 
 ````
-git clone git@github.com:<%= user %>/<%= repo %>.git
+$ git clone git@github.com:<%= user %>/<%= repo %>.git
+$ cd <%= repo %>
+$ npm run uploadCartridge
 ````
 
-Or can be added to an existing SFRA cartridges project using
+### As npm library dependency on SFRA project
+
+This library can be added to an existing SFRA project as npm library dependency using
 
 ````
-npm i cartridge_lib_<%= module_name %>
+$ npm i cartridge_lib_<%= module_name %>
+````
+
+This option is recommended for develop environments using [vscode](https://code.visualstudio.com/) + [Prophet Debugger](https://marketplace.visualstudio.com/items?itemName=SqrTT.prophet)
+
+The Prophet Debugger Extension should be set with this configuration on user settings.json
+````
+"extension.prophet.upload.enabled": true,
+"extension.prophet.ignore.list": ["\\.git", "\\.zip$"],
 ````
 
 ## Usage
