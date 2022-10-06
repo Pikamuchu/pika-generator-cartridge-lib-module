@@ -35,7 +35,7 @@
     "file": "0.2.2",
     "jsesc": "2.2.0",
     "latest-version": "^5.1.0",
-    "yeoman-generator": "0.24.1",
+    "yeoman-generator": "5.7.0",
     "yo": "1.8.5",
     "yosay": "1.2.1"
   },
@@ -50,6 +50,6 @@
     "prettier": "^1.19.1",
     "sinon": "^7.5.0",
     "yeoman-assert": "2.2.1",
-    "yeoman-test": "1.5.1"
+    "yeoman-test": "1.9.1"
   }
 }
